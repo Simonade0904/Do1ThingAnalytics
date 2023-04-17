@@ -2,6 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import {getUserCount} from '../data/DB';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +23,18 @@ export default function Home() {
             <h1 className={styles.h1}>
               Do1Thing Analytics
             </h1>
+          </div>
+          <div className={styles.bodyContainer}>
+            <div className={styles.analyticModuleContainer}>
+              <p>Users</p>
+              <Button variant="contained"
+                      onClick={() => {
+                        getUserCount();
+                      }}
+              >
+                Get Count</Button>
+              <Button variant="outlined">Get CSV</Button>
+            </div>
           </div>
         </div>
       </main>
