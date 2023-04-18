@@ -27,14 +27,14 @@ const getFBApp = () => {
     console.log('count: ', snapshot.data().count);
   }
 
-  const getSignedUpUserCount = async () => {
+  const getSignedUpUsers = async () => {
     const usersColl = collection(getDB(), userCollection);
     const q = query(usersColl, where("badges", "array-contains", 1));
     const snapshot = await getDocs(q);
 
     let usersObj = [];
     snapshot.forEach((doc) => {
-      usersObj = [...usersObj, doc.data()];
+      usersObj = [...usersObj, {email: doc.data().email, badges: String(doc.data().badges)}];
     })
 
     console.log('signedup: ', usersObj);
@@ -43,5 +43,5 @@ const getFBApp = () => {
   }
 
 export {getUserCount,
-        getSignedUpUserCount,
+        getSignedUpUsers,
 };

@@ -3,12 +3,25 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import {getUserCount, getSignedUpUserCount} from '../data/DB';
+import {getUserCount, getSignedUpUsers} from '../data/DB';
+import {CSVLink} from "react-csv";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const signedUpUsersHeaders = [
+    {label: "Email", key: 'email'},
+    {label: "Badges", key: 'badges'},
+  ]
+
+  const [signedUpUsersData, setSignedUpUsersData] = useState([]);
+  const [usersCount, setUsersCount] = useState([]);
+
+
+
   return (
     <>
       <Head>
@@ -26,18 +39,25 @@ export default function Home() {
           </div>
           <div className={styles.bodyContainer}>
             <div className={styles.analyticModuleContainer}>
-              <p>Users</p>
+              <p>Users: </p>
               <Button variant="contained"
                       onClick={() => {
                         getUserCount();
                       }}
               >
                 Get Count</Button>
-              <Button variant="outlined"
-                      onClick={() => {
-                        getSignedUpUserCount();
+              <Button variant="contained"
+                      onClick={async () => {
+                        const data = await getSignedUpUsers();
+                        setSignedUpUsersData(data);
                       }}
-              >Get CSV</Button>
+              >
+                Get latest users list</Button>
+              <CSVLink data={signedUpUsersData} 
+                       headers={signedUpUsersHeaders}
+                       className={styles.csvLinkButton}
+              >Get CSV
+              </CSVLink>
             </div>
           </div>
         </div>
