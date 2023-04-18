@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import {getUserCount} from '../data/DB';
+import {getUserCount, getSignedUpUserCount} from '../data/DB';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,7 +33,11 @@ export default function Home() {
                       }}
               >
                 Get Count</Button>
-              <Button variant="outlined">Get CSV</Button>
+              <Button variant="outlined"
+                      onClick={() => {
+                        getSignedUpUserCount();
+                      }}
+              >Get CSV</Button>
             </div>
           </div>
         </div>

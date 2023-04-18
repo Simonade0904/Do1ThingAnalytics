@@ -1,6 +1,6 @@
 import { getApps, initializeApp } from "firebase/app";
 import firebaseConfig from './Secret';
-import { collection, query, where, getCountFromServer, getFirestore } from 'firebase/firestore';
+import { collection, query, where, getCountFromServer, getFirestore, getDocs } from 'firebase/firestore';
 
 let firebaseApp = null;
 let userCollection = 'users'
@@ -27,4 +27,21 @@ const getFBApp = () => {
     console.log('count: ', snapshot.data().count);
   }
 
-export {getUserCount};
+  const getSignedUpUserCount = async () => {
+    const usersColl = collection(getDB(), userCollection);
+    const q = query(usersColl, where("badges", "array-contains", 1));
+    const snapshot = await getDocs(q);
+
+    let usersObj = [];
+    snapshot.forEach((doc) => {
+      usersObj = [...usersObj, doc.data()];
+    })
+
+    console.log('signedup: ', usersObj);
+
+    return usersObj;
+  }
+
+export {getUserCount,
+        getSignedUpUserCount,
+};
