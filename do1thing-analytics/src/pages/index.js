@@ -18,9 +18,11 @@ export default function Home() {
   ]
 
   const [signedUpUsersData, setSignedUpUsersData] = useState([]);
-  const [usersCount, setUsersCount] = useState([]);
+  const [usersCount, setUsersCount] = useState(0);
 
-
+  useEffect(() => {
+    getUserCount().then((data) => setUsersCount(data));
+  })
 
   return (
     <>
@@ -39,13 +41,7 @@ export default function Home() {
           </div>
           <div className={styles.bodyContainer}>
             <div className={styles.analyticModuleContainer}>
-              <p>Users: </p>
-              <Button variant="contained"
-                      onClick={() => {
-                        getUserCount();
-                      }}
-              >
-                Get Count</Button>
+              <p>Users: {usersCount}</p>
               <Button variant="contained"
                       onClick={async () => {
                         const data = await getSignedUpUsers();
@@ -61,6 +57,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        
       </main>
     </>
   )
