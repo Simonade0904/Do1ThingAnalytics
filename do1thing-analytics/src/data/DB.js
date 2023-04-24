@@ -22,14 +22,14 @@ const getFBApp = () => {
 
   const getUserCount = async () => {
     const usersColl = collection(getDB(), userCollection);
-    const q = query(usersColl, where("badges", "array-contains", 1));
+    const q = query(usersColl, where("badges", "array-contains", 0));
     const snapshot = await getCountFromServer(q);
     return snapshot.data().count;
   }
 
   const getSignedUpUsers = async () => {
     const usersColl = collection(getDB(), userCollection);
-    const q = query(usersColl, where("badges", "array-contains", 1));
+    const q = query(usersColl, where("badges", "array-contains", 0));
     const snapshot = await getDocs(q);
 
     let usersObj = [];

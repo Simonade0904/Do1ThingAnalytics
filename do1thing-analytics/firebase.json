@@ -1,10 +1,13 @@
 {
   "hosting": {
-    "public": "https://github.com/Simonade0904/Do1ThingAnalytics/tree/main/do1thing-analytics",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   }
 }
